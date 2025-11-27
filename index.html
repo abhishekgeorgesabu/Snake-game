@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" class="w-full h-full">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<script src="https://cdn.tailwindcss.com"></script>
+
+		<title>Snake Game</title>
+	</head>
+	<body class="w-full h-full min-h-screen bg-blue-100 text-white">
+		<header class="py-6">
+			<h1 class="text-center text-3xl font-semibold text-green-600">
+				Snake Game
+			</h1>
+		</header>
+		<main class="flex flex-col min-h-screen items-center justify-center gap-8">
+			<div class="flex gap-4 flex-start flex-col">
+				<button
+					class="new-game min-w-[7rem] py-2 px-4 rounded-md bg-red-600 text-white text-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400"
+				>
+					New Game
+				</button>
+				<button
+					class="continue-game min-w-[7rem] py-2 px-4 rounded-md bg-red-600 text-white text-lg hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400"
+				>
+					Continue Game
+				</button>
+			</div>
+		</main>
+		<script src="intro.js"></script>
+	</body>
+</html>
