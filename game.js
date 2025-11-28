@@ -1,3 +1,9 @@
+const nav = performance.getEntriesByType("navigation")[0];
+
+if (nav.type === "reload") {
+	window.location.href = "index.html";
+}
+
 let lastGame = localStorage.getItem("game")
 	? JSON.parse(localStorage.getItem("game"))
 	: {};
@@ -8,13 +14,14 @@ let dir = lastGame.dir ? lastGame.dir : { x: 1, y: 0 };
 let snake = lastGame.snake
 	? lastGame.snake
 	: [
-			{ x: 16, y: 20, dir: { x: 1, y: 0 } },
-			{ x: 15, y: 20, dir: { x: 1, y: 0 } },
+			{ x: 15, y: 15, dir: { x: 1, y: 0 } },
+			{ x: 14, y: 15, dir: { x: 1, y: 0 } },
 	  ];
-let food = lastGame.food ? lastGame.food : null;
+let foodSpot = lastGame.food ? lastGame.food : null;
 let gameOver = lastGame.gameOver ? lastGame.gameOver : false;
 let foodGrids = [];
 let length = snake.length;
+let control = null;
 
 for (let i = 1; i <= 20; i++) {
 	for (let j = 1; j <= 20; j++) {
@@ -25,14 +32,16 @@ for (let i = 1; i <= 20; i++) {
 	}
 }
 
+let gameBox = document.querySelector("#game-box");
+
 // Control keys
 
 document.addEventListener("keydown", (e) => {
 	if (dir.x) {
-		if (e.key == "ArrowUp") {
+		if (e.key == "ArrowDown") {
 			dir.y = 1;
 			dir.x = 0;
-		} else if (e.key == "ArrowDown") {
+		} else if (e.key == "ArrowUp") {
 			dir.y = -1;
 			dir.x = 0;
 		}
@@ -47,18 +56,50 @@ document.addEventListener("keydown", (e) => {
 	}
 });
 
-if (!food) newFood();
+if (!foodSpot) newFood();
+
+render();
+
+function render() {
+	snake.forEach((part) => {
+		renderTile(part);
+	});
+	renderFood();
+}
+
+function renderTile(cell) {
+	let tile = document.createElement("div");
+	tile.classList.add("bg-red-400");
+
+	tile.style.gridRowStart = cell.y;
+	tile.style.gridColumnStart = cell.x;
+
+	gameBox.appendChild(tile);
+}
+
+function renderFood() {
+	let food = document.createElement("div");
+	food.classList.add("bg-green-300", "rounded-full");
+
+	food.style.gridRowStart = foodSpot.y;
+	food.style.gridColumnStart = foodSpot.x;
+
+	gameBox.appendChild(food);
+}
 
 //Game
 
-let control = setInterval(gameLoop, 400);
+if (!gameOver) {
+	control = setInterval(gameLoop, 200);
+}
 
 // Game logic
 
 function gameLoop() {
+	gameBox.innerHTML = "";
 	moveHead();
 	let head = snake[0];
-	if (head.x === food.x && head.y === food.y) {
+	if (head.x === foodSpot.x && head.y === foodSpot.y) {
 		length++;
 		newFood();
 	}
@@ -72,11 +113,13 @@ function gameLoop() {
 
 	console.log(snake[0]);
 	moveTail();
+	render();
 }
 
 function newFood() {
 	let ch = Math.floor(foodGrids.length * Math.random());
-	food = foodGrids[ch];
+	foodSpot = foodGrids[ch];
+	renderFood();
 }
 
 function moveHead() {
@@ -90,14 +133,16 @@ function moveHead() {
 	let newHead = { x: row, y: col, dir: dir };
 	snake.unshift(newHead);
 	foodGrids = foodGrids.filter((grid) => grid.x !== row || grid.y !== col);
+	renderTile(newHead);
 }
 
 function moveTail() {
-	for (let i = 0; i < snake.length - length; i++) {
+	while (length < snake.length) {
 		let lastTail = snake.pop();
 		foodGrids.push({ x: lastTail.x, y: lastTail.y });
 	}
 }
+
 function endGame() {
 	gameOver = true;
 	clearInterval(control);
@@ -107,6 +152,6 @@ function endGame() {
 // Save in case of closing tab
 
 window.addEventListener("beforeunload", () => {
-	let game = { dir: dir, snake: snake, food: food };
+	let game = { dir: dir, snake: snake, food: foodSpot };
 	localStorage.setItem("game", JSON.stringify(game));
 });

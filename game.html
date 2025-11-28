@@ -9,8 +9,12 @@
 	<body class="size-full">
 		<main class="flex size-full justify-center items-center">
 			<div
-				class="h-[500px] w-[500px] border border-black grid"
-				style="grid-template-columns: 20; grid-template-rows: 20"
+				id="game-box"
+				class="h-[500px] w-[500px] border border-black grid p-4"
+				style="
+					grid-template-columns: repeat(20, 1fr);
+					grid-template-rows: repeat(20, 1fr);
+				"
 			></div>
 		</main>
 		<script src="game.js"></script>
