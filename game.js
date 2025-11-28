@@ -1,16 +1,18 @@
-let game = localStorage.getItem("game")
+let lastGame = localStorage.getItem("game")
 	? JSON.parse(localStorage.getItem("game"))
-	: [];
-let hidgScore = localStorage.getItem("game");
-let row = null;
-let col = null;
-let dir = { x: 1, y: 0 };
-let snake = [
-	{ x: 16, y: 20, dir: { x: 1, y: 0 } },
-	{ x: 15, y: 20, dir: { x: 1, y: 0 } },
-];
-let food = null;
-let gameOver = false;
+	: {};
+let highScore = localStorage.getItem("high-score");
+// let row = lastGame.row ? lastGame.row : null;
+// let col = lastGame.row ? lastGame.row : null;
+let dir = lastGame.dir ? lastGame.dir : { x: 1, y: 0 };
+let snake = lastGame.snake
+	? lastGame.snake
+	: [
+			{ x: 16, y: 20, dir: { x: 1, y: 0 } },
+			{ x: 15, y: 20, dir: { x: 1, y: 0 } },
+	  ];
+let food = lastGame.food ? lastGame.food : null;
+let gameOver = lastGame.gameOver ? lastGame.gameOver : false;
 let foodGrids = [];
 let length = snake.length;
 
@@ -23,7 +25,7 @@ for (let i = 1; i <= 20; i++) {
 	}
 }
 
-// keys control
+// Control keys
 
 document.addEventListener("keydown", (e) => {
 	if (dir.x) {
@@ -45,9 +47,13 @@ document.addEventListener("keydown", (e) => {
 	}
 });
 
-newFood();
+if (!food) newFood();
 
-let control = setInterval(gameLoop, 1000);
+//Game
+
+let control = setInterval(gameLoop, 400);
+
+// Game logic
 
 function gameLoop() {
 	moveHead();
@@ -65,9 +71,6 @@ function gameLoop() {
 	}
 
 	console.log(snake[0]);
-
-	// remember to fix moveTail()
-
 	moveTail();
 }
 
@@ -90,10 +93,20 @@ function moveHead() {
 }
 
 function moveTail() {
-	for (let i = 0; i < snake.length - length; i++) snake.pop();
+	for (let i = 0; i < snake.length - length; i++) {
+		let lastTail = snake.pop();
+		foodGrids.push({ x: lastTail.x, y: lastTail.y });
+	}
 }
 function endGame() {
 	gameOver = true;
 	clearInterval(control);
 	console.log("Game Over!!!");
 }
+
+// Save in case of closing tab
+
+window.addEventListener("beforeunload", () => {
+	let game = { dir: dir, snake: snake, food: food };
+	localStorage.setItem("game", JSON.stringify(game));
+});
