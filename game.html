@@ -9,6 +9,20 @@
 	<body class="size-full">
 		<main class="flex size-full justify-center items-center">
 			<div
+				class="fixed w-full self-start flex justify-between items-center text-end p-10"
+			>
+				<div
+					class="text-3xl self-start w-[10rem] text-start bg-green-400 p-2 rounded-md text-white"
+				>
+					Score: <span id="score" class="text-3xl"></span>
+				</div>
+				<div
+					class="text-3xl self-start w-[14rem] text-start bg-red-500 p-2 rounded-md text-white"
+				>
+					High Score: <span id="high-score" class="text-3xl"></span>
+				</div>
+			</div>
+			<div
 				id="game-box"
 				class="h-[500px] w-[500px] border border-black grid p-4"
 				style="
@@ -16,7 +30,20 @@
 					grid-template-rows: repeat(20, 1fr);
 				"
 			></div>
+			<div
+				id="modal"
+				class="hidden size-full bg-transparent flex flex-col justify-center items-center bg-slate-400 gap-4"
+			>
+				<div class="text-3xl">GAME OVER</div>
+				<button
+					id="restart-btn"
+					class="p-3 text-xl rounded-md bg-red-500 text-white"
+				>
+					Start over
+				</button>
+			</div>
 		</main>
+
 		<script src="game.js"></script>
 	</body>
 </html>

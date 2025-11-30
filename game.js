@@ -7,15 +7,16 @@ if (nav.type === "reload") {
 let lastGame = localStorage.getItem("game")
 	? JSON.parse(localStorage.getItem("game"))
 	: {};
-let highScore = localStorage.getItem("high-score");
-// let row = lastGame.row ? lastGame.row : null;
-// let col = lastGame.row ? lastGame.row : null;
+let highScore = localStorage.getItem("high-score")
+	? localStorage.getItem("high-score")
+	: 0;
+
 let dir = lastGame.dir ? lastGame.dir : { x: 1, y: 0 };
 let snake = lastGame.snake
 	? lastGame.snake
 	: [
-			{ x: 15, y: 15, dir: { x: 1, y: 0 } },
-			{ x: 14, y: 15, dir: { x: 1, y: 0 } },
+			{ x: 9, y: 10, dir: { x: 1, y: 0 } },
+			{ x: 8, y: 10, dir: { x: 1, y: 0 } },
 	  ];
 let foodSpot = lastGame.food ? lastGame.food : null;
 let gameOver = lastGame.gameOver ? lastGame.gameOver : false;
@@ -33,6 +34,7 @@ for (let i = 1; i <= 20; i++) {
 }
 
 let gameBox = document.querySelector("#game-box");
+let modal = document.querySelector("#modal");
 
 // Control keys
 
@@ -69,7 +71,7 @@ function render() {
 
 function renderTile(cell) {
 	let tile = document.createElement("div");
-	tile.classList.add("bg-red-400");
+	tile.classList.add("bg-green-400");
 
 	tile.style.gridRowStart = cell.y;
 	tile.style.gridColumnStart = cell.x;
@@ -79,7 +81,7 @@ function renderTile(cell) {
 
 function renderFood() {
 	let food = document.createElement("div");
-	food.classList.add("bg-green-300", "rounded-full");
+	food.classList.add("bg-red-500", "rounded-full");
 
 	food.style.gridRowStart = foodSpot.y;
 	food.style.gridColumnStart = foodSpot.x;
@@ -147,11 +149,30 @@ function endGame() {
 	gameOver = true;
 	clearInterval(control);
 	console.log("Game Over!!!");
+	modal.classList.remove("hidden");
+	modal.classList.add("fixed");
 }
+
+let startOverBtn = document.querySelector("#restart-btn");
+startOverBtn.addEventListener("click", () => {
+	document.querySelector("#modal").classList.add("hidden");
+	localStorage.removeItem("game");
+	dir = { x: 1, y: 0 };
+	snake = [
+		{ x: 9, y: 10, dir: { x: 1, y: 0 } },
+		{ x: 8, y: 10, dir: { x: 1, y: 0 } },
+	];
+	length = snake.length;
+	gameBox.innerHTML = "";
+	newFood();
+	gameOver = false;
+	render();
+	control = setInterval(gameLoop, 200);
+});
 
 // Save in case of closing tab
 
 window.addEventListener("beforeunload", () => {
-	let game = { dir: dir, snake: snake, food: foodSpot };
+	let game = { dir: dir, snake: snake, food: foodSpot, gameOver: gameOver };
 	localStorage.setItem("game", JSON.stringify(game));
 });

@@ -1,6 +1,10 @@
 let newBtn = document.querySelector(".new-game");
 let contBtn = document.querySelector(".continue-game");
-let id = localStorage.getItem("id") ? Number(localStorage.getItem("id")) : 0;
+let game = localStorage.getItem("game")
+	? JSON.parse(localStorage.getItem("game"))
+	: [];
+
+if (game == [] || game.gameOver) contBtn.style.display = "none";
 
 newBtn.addEventListener("click", () => {
 	localStorage.removeItem("game");
