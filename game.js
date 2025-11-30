@@ -40,27 +40,36 @@ let modal = document.querySelector("#modal");
 
 document.addEventListener("keydown", (e) => {
 	if (dir.x) {
-		if (e.key == "ArrowDown") {
+		if (e.key == "ArrowDown" || e.key.toLowerCase() == "s") {
 			dir.y = 1;
 			dir.x = 0;
-		} else if (e.key == "ArrowUp") {
+		} else if (e.key == "ArrowUp" || e.key.toLowerCase() == "w") {
 			dir.y = -1;
 			dir.x = 0;
 		}
 	} else if (dir.y) {
-		if (e.key == "ArrowRight") {
+		if (e.key == "ArrowRight" || e.key.toLowerCase() == "d") {
 			dir.x = 1;
 			dir.y = 0;
-		} else if (e.key == "ArrowLeft") {
+		} else if (e.key == "ArrowLeft" || e.key.toLowerCase() == "a") {
 			dir.x = -1;
 			dir.y = 0;
 		}
 	}
+	console.log(e.key);
 });
 
 if (!foodSpot) newFood();
 
+function newFood() {
+	let ch = Math.floor(foodGrids.length * Math.random());
+	foodSpot = foodGrids[ch];
+	renderFood();
+}
+
 render();
+
+// Rendering functions
 
 function render() {
 	snake.forEach((part) => {
@@ -113,16 +122,11 @@ function gameLoop() {
 		endGame();
 	}
 
-	console.log(snake[0]);
 	moveTail();
 	render();
 }
 
-function newFood() {
-	let ch = Math.floor(foodGrids.length * Math.random());
-	foodSpot = foodGrids[ch];
-	renderFood();
-}
+// Movement Functions
 
 function moveHead() {
 	let head = snake[0];
@@ -145,6 +149,8 @@ function moveTail() {
 	}
 }
 
+// Game Over
+
 function endGame() {
 	gameOver = true;
 	clearInterval(control);
@@ -152,6 +158,8 @@ function endGame() {
 	modal.classList.remove("hidden");
 	modal.classList.add("fixed");
 }
+
+// Restart Game
 
 let startOverBtn = document.querySelector("#restart-btn");
 startOverBtn.addEventListener("click", () => {
