@@ -49,23 +49,24 @@ highScoreBox.textContent = highScore;
 
 document.addEventListener("keydown", (e) => {
 	if (dir.x) {
-		if (e.key == "ArrowDown" || e.key.toLowerCase() == "s") {
-			dir.y = 1;
-			dir.x = 0;
-		} else if (e.key == "ArrowUp" || e.key.toLowerCase() == "w") {
-			dir.y = -1;
-			dir.x = 0;
+		if ((e.key == "ArrowDown" || e.key.toLowerCase() == "s") && dir.y !== 1) {
+			dir = { y: 1, x: 0 };
+		} else if (
+			(e.key == "ArrowUp" || e.key.toLowerCase() == "w") &&
+			dir.y !== -1
+		) {
+			dir = { y: -1, x: 0 };
 		}
-	} else if (dir.y) {
-		if (e.key == "ArrowRight" || e.key.toLowerCase() == "d") {
-			dir.x = 1;
-			dir.y = 0;
-		} else if (e.key == "ArrowLeft" || e.key.toLowerCase() == "a") {
-			dir.x = -1;
-			dir.y = 0;
+	} else {
+		if ((e.key == "ArrowRight" || e.key.toLowerCase() == "d") && dir.x !== -1) {
+			dir = { y: 0, x: 1 };
+		} else if (
+			(e.key == "ArrowLeft" || e.key.toLowerCase() == "a") &&
+			dir.x !== 1
+		) {
+			dir = { y: 0, x: -1 };
 		}
 	}
-	console.log(e.key);
 });
 
 if (!foodSpot) newFood();
