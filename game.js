@@ -27,7 +27,7 @@ let control = null;
 
 for (let i = 1; i <= 20; i++) {
 	for (let j = 1; j <= 20; j++) {
-		if (snake.every((grid) => grid.x !== i && grid.y !== j)) {
+		if (!snake.some((grid) => grid.x === i && grid.y === j)) {
 			let obj = { x: i, y: j };
 			foodGrids.push(obj);
 		}
