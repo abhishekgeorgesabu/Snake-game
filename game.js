@@ -20,6 +20,7 @@ let snake = lastGame.snake
 	  ];
 let foodSpot = lastGame.food ? lastGame.food : null;
 let gameOver = lastGame.gameOver ? lastGame.gameOver : false;
+let score = lastGame.score ? lastGame.score : 0;
 let foodGrids = [];
 let length = snake.length;
 let control = null;
@@ -35,6 +36,14 @@ for (let i = 1; i <= 20; i++) {
 
 let gameBox = document.querySelector("#game-box");
 let modal = document.querySelector("#modal");
+
+// Score box
+
+let highScoreBox = document.querySelector("#high-score");
+let scoreBox = document.querySelector("#score");
+
+scoreBox.textContent = score;
+highScoreBox.textContent = highScore;
 
 // Control keys
 
@@ -112,6 +121,10 @@ function gameLoop() {
 	let head = snake[0];
 	if (head.x === foodSpot.x && head.y === foodSpot.y) {
 		length++;
+		score++;
+		if (score > highScore) highScore = score;
+		scoreBox.textContent = score;
+		highScoreBox.textContent = highScore;
 		newFood();
 	}
 	if (
@@ -157,6 +170,7 @@ function endGame() {
 	console.log("Game Over!!!");
 	modal.classList.remove("hidden");
 	modal.classList.add("fixed");
+	localStorage.setItem("high-score", highScore);
 }
 
 // Restart Game
@@ -164,6 +178,7 @@ function endGame() {
 let startOverBtn = document.querySelector("#restart-btn");
 startOverBtn.addEventListener("click", () => {
 	document.querySelector("#modal").classList.add("hidden");
+
 	localStorage.removeItem("game");
 	dir = { x: 1, y: 0 };
 	snake = [
@@ -171,16 +186,27 @@ startOverBtn.addEventListener("click", () => {
 		{ x: 8, y: 10, dir: { x: 1, y: 0 } },
 	];
 	length = snake.length;
+	score = 0;
+	scoreBox.textContent = score;
+
 	gameBox.innerHTML = "";
 	newFood();
-	gameOver = false;
 	render();
+
+	gameOver = false;
 	control = setInterval(gameLoop, 200);
 });
 
 // Save in case of closing tab
 
 window.addEventListener("beforeunload", () => {
-	let game = { dir: dir, snake: snake, food: foodSpot, gameOver: gameOver };
+	let game = {
+		dir: dir,
+		snake: snake,
+		food: foodSpot,
+		gameOver: gameOver,
+		score: score,
+	};
 	localStorage.setItem("game", JSON.stringify(game));
+	localStorage.setItem("high-score", highScore);
 });
