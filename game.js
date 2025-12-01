@@ -22,9 +22,6 @@ let foodSpot = lastGame.food ? lastGame.food : null;
 let gameOver = lastGame.gameOver ? lastGame.gameOver : false;
 let score = lastGame.score ? lastGame.score : 0;
 let foodGrids = [];
-let length = snake.length;
-let control = null;
-
 for (let i = 1; i <= 20; i++) {
 	for (let j = 1; j <= 20; j++) {
 		if (!snake.some((grid) => grid.x === i && grid.y === j)) {
@@ -33,6 +30,9 @@ for (let i = 1; i <= 20; i++) {
 		}
 	}
 }
+
+let length = snake.length;
+let control = null;
 
 let gameBox = document.querySelector("#game-box");
 let modal = document.querySelector("#modal");
@@ -149,7 +149,6 @@ function moveHead() {
 	let newHead = { x: row, y: col, dir: dir };
 	snake.unshift(newHead);
 	foodGrids = foodGrids.filter((grid) => grid.x !== row || grid.y !== col);
-	renderTile(newHead);
 }
 
 function moveTail() {
@@ -164,7 +163,6 @@ function moveTail() {
 function endGame() {
 	gameOver = true;
 	clearInterval(control);
-	console.log("Game Over!!!");
 	modal.classList.remove("hidden");
 	modal.classList.add("fixed");
 	localStorage.setItem("high-score", highScore);
@@ -182,6 +180,16 @@ startOverBtn.addEventListener("click", () => {
 		{ x: 9, y: 10, dir: { x: 1, y: 0 } },
 		{ x: 8, y: 10, dir: { x: 1, y: 0 } },
 	];
+	foodGrids = [];
+	for (let i = 1; i <= 20; i++) {
+		for (let j = 1; j <= 20; j++) {
+			if (!snake.some((grid) => grid.x === i && grid.y === j)) {
+				let obj = { x: i, y: j };
+				foodGrids.push(obj);
+			}
+		}
+	}
+
 	length = snake.length;
 	score = 0;
 	scoreBox.textContent = score;
@@ -198,11 +206,11 @@ startOverBtn.addEventListener("click", () => {
 
 window.addEventListener("beforeunload", () => {
 	let game = {
-		dir: dir,
-		snake: snake,
+		dir,
+		snake,
 		food: foodSpot,
-		gameOver: gameOver,
-		score: score,
+		gameOver,
+		score,
 	};
 	localStorage.setItem("game", JSON.stringify(game));
 	localStorage.setItem("high-score", highScore);
