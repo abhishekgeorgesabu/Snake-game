@@ -128,11 +128,7 @@ function gameLoop() {
 		highScoreBox.textContent = highScore;
 		newFood();
 	}
-	if (
-		snake.some((e) => {
-			return head !== e && head.x === e.x && head.y === e.y;
-		})
-	) {
+	if (snake.slice(1).some((e) => head.x === e.x && head.y === e.y)) {
 		endGame();
 	}
 
