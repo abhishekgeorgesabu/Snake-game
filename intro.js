@@ -1,11 +1,11 @@
 let newBtn = document.querySelector(".new-game");
 let contBtn = document.querySelector(".continue-game");
-let game = JSON.parse(localStorage.getItem("game"));
+let game = JSON.parse(localStorage.getItem("snake-game"));
 
 if (!game || game.gameOver) contBtn.style.display = "none";
 
 newBtn.addEventListener("click", () => {
-	localStorage.removeItem("game");
+	localStorage.removeItem("snake-game");
 	window.location.href = "game.html";
 });
 
