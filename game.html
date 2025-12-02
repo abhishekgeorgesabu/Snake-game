@@ -6,25 +6,32 @@
 		<script src="https://cdn.tailwindcss.com"></script>
 		<title>Document</title>
 	</head>
-	<body class="size-full">
-		<main class="flex size-full justify-center items-center">
+	<body class="min-h-screen bg-white">
+		<main
+			class="relative w-full min-h-screen flex justify-center items-center flex-col"
+		>
+			<!-- Score Bar -->
+
 			<div
-				class="fixed w-full self-start flex justify-between items-center text-end p-10"
+				class="fixed top-0 w-full flex justify-between items-center p-6 gap-5"
 			>
 				<div
-					class="text-3xl self-start w-[10rem] text-start bg-green-400 p-2 rounded-md text-white"
+					class="text-xl sm:text-3xl min-w-[7rem] text-white bg-green-400 p-2 rounded-md"
 				>
-					Score: <span id="score" class="text-3xl"></span>
+					Score: <span id="score" class="text-xl sm:text-3xl"></span>
 				</div>
 				<div
-					class="text-3xl self-start w-[14rem] text-start bg-red-500 p-2 rounded-md text-white"
+					class="text-xl sm:text-3xl min-w-[10rem] bg-red-500 p-2 rounded-md text-white"
 				>
-					High Score: <span id="high-score" class="text-3xl"></span>
+					High Score: <span id="high-score" class="text-xl sm:text-3xl"></span>
 				</div>
 			</div>
+
+			<!-- Game Box -->
+
 			<div
 				id="game-box"
-				class="h-[500px] w-[500px] grid ring-8 ring-black"
+				class="h-[300px] w-[300px] sm:h-[500px] sm:w-[500px] grid ring-8 ring-black"
 				style="
 					grid-template-columns: repeat(20, 1fr);
 					grid-template-rows: repeat(20, 1fr);
@@ -32,7 +39,7 @@
 			></div>
 			<div
 				id="modal"
-				class="hidden size-full bg-transparent flex flex-col justify-center items-center bg-slate-400 gap-4"
+				class="hidden size-full bg-black/10 flex flex-col justify-center items-center gap-4"
 			>
 				<div class="text-3xl">GAME OVER</div>
 				<button
@@ -41,6 +48,78 @@
 				>
 					Start over
 				</button>
+			</div>
+
+			<!-- Mobile Controls -->
+
+			<div
+				class="mob-ctrls fixed bottom-10 left-1/2 -translate-x-1/2 lg:hidden -z-10 flex flex-row w-full lg:hidden items-center justify-between px-6"
+			>
+				<div class="mob-ctrls-y flex flex-col gap-10">
+					<button class="ctrl-up bg-white/20 rounded-full">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="60"
+							height="60"
+							viewBox="0 0 15 15"
+						>
+							<path
+								fill="#A9A9A9"
+								fill-rule="evenodd"
+								d="M7.5 0a7.5 7.5 0 1 1 0 15a7.5 7.5 0 0 1 0-15ZM3.293 9L7.5 4.793L11.707 9H3.293Z"
+								clip-rule="evenodd"
+							/>
+						</svg>
+					</button>
+					<button class="ctrl-down bg-white/20 rounded-full">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="60"
+							height="60"
+							viewBox="0 0 15 15"
+						>
+							<path
+								fill="#A9A9A9"
+								fill-rule="evenodd"
+								d="M7.5 15a7.5 7.5 0 1 1 0-15a7.5 7.5 0 0 1 0 15Zm4.207-9L7.5 10.207L3.293 6h8.414Z"
+								clip-rule="evenodd"
+							/>
+						</svg>
+					</button>
+				</div>
+				<button>h</button>
+				<div class="mob-ctrls-x flex gap-10">
+					<button class="ctrl-left bg-white/20 backdrop-blur-md rounded-full">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="60"
+							height="60"
+							viewBox="0 0 15 15"
+						>
+							<path
+								fill="#A9A9A9"
+								fill-rule="evenodd"
+								d="M0 7.5a7.5 7.5 0 1 1 15 0a7.5 7.5 0 0 1-15 0Zm9 4.207L4.793 7.5L9 3.293v8.414Z"
+								clip-rule="evenodd"
+							/>
+						</svg>
+					</button>
+					<button class="ctrl-right bg-white/20 rounded-full">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							width="60"
+							height="60"
+							viewBox="0 0 15 15"
+						>
+							<path
+								fill="#A9A9A9"
+								fill-rule="evenodd"
+								d="M15 7.5a7.5 7.5 0 1 1-15 0a7.5 7.5 0 0 1 15 0ZM6 3.293L10.207 7.5L6 11.707V3.293Z"
+								clip-rule="evenodd"
+							/>
+						</svg>
+					</button>
+				</div>
 			</div>
 		</main>
 
