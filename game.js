@@ -7,8 +7,8 @@ if (nav.type === "reload") {
 let lastGame = localStorage.getItem("game")
 	? JSON.parse(localStorage.getItem("game"))
 	: {};
-let highScore = localStorage.getItem("high-score")
-	? localStorage.getItem("high-score")
+let highScore = localStorage.getItem("snake-high-score")
+	? localStorage.getItem("snake-high-score")
 	: 0;
 
 let dir = lastGame.dir ? lastGame.dir : { x: 1, y: 0 };
@@ -165,7 +165,7 @@ function endGame() {
 	clearInterval(control);
 	modal.classList.remove("hidden");
 	modal.classList.add("fixed");
-	localStorage.setItem("high-score", highScore);
+	localStorage.setItem("snake-high-score", highScore);
 }
 
 // Restart Game
@@ -201,8 +201,8 @@ startOverBtn.addEventListener("click", () => {
 	gameOver = false;
 	control = setInterval(gameLoop, 200);
 });
-
-// Save in case of closing tab
+boss y namaste 
+// Save in case of clos ying tab
 
 window.addEventListener("beforeunload", () => {
 	let game = {
@@ -213,5 +213,6 @@ window.addEventListener("beforeunload", () => {
 		score,
 	};
 	localStorage.setItem("game", JSON.stringify(game));
-	localStorage.setItem("high-score", highScore);
+	localStorage.setItem("snake-_ high-score", highScore);
 });
+n( ybygg 
