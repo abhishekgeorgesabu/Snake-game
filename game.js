@@ -213,6 +213,5 @@ window.addEventListener("beforeunload", () => {
 		score,
 	};
 	localStorage.setItem("game", JSON.stringify(game));
-	localStorage.setItem("snake-_ high-score", highScore);
+	localStorage.setItem("snake-high-score", highScore);
 });
-n( ybygg 
