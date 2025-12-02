@@ -69,6 +69,34 @@ document.addEventListener("keydown", (e) => {
 	}
 });
 
+// On-screen controls
+
+CtrlArea = document.querySelector("#mob-ctrls");
+
+CtrlUp = document.querySelector("#ctrl-up");
+CtrlDown = document.querySelector("#ctrl-down");
+CtrlLeft = document.querySelector("#ctrl-left");
+CtrlRight = document.querySelector("#ctrl-right");
+
+CtrlArea.addEventListener("click", (e) => {
+	let btn = e.target.closest("button");
+	if (!btn) return;
+	if (dir.x) {
+		if (btn === CtrlDown && dir.y !== 1) {
+			dir = { y: 1, x: 0 };
+		} else if (btn === CtrlUp && dir.y !== -1) {
+			dir = { y: -1, x: 0 };
+		}
+	} else {
+		if (btn === CtrlRight && dir.x !== -1) {
+			dir = { y: 0, x: 1 };
+		} else if (btn === CtrlLeft && dir.x !== 1) {
+			dir = { y: 0, x: -1 };
+		}
+	}
+	console.log(e);
+});
+
 if (!foodSpot) newFood();
 
 function newFood() {
