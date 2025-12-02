@@ -47,8 +47,12 @@ highScoreBox.textContent = highScore;
 
 // Control keys
 
+let inputLocked = true;
+
 document.addEventListener("keydown", (e) => {
-	if (dir.x) {
+	if (inputLocked) return;
+
+	if (dir.x !== 0) {
 		if ((e.key == "ArrowDown" || e.key.toLowerCase() == "s") && dir.y !== 1) {
 			dir = { y: 1, x: 0 };
 		} else if (
@@ -57,7 +61,7 @@ document.addEventListener("keydown", (e) => {
 		) {
 			dir = { y: -1, x: 0 };
 		}
-	} else {
+	} else if (dir.y !== 0) {
 		if ((e.key == "ArrowRight" || e.key.toLowerCase() == "d") && dir.x !== -1) {
 			dir = { y: 0, x: 1 };
 		} else if (
@@ -67,6 +71,8 @@ document.addEventListener("keydown", (e) => {
 			dir = { y: 0, x: -1 };
 		}
 	}
+
+	inputLocked = true;
 });
 
 // On-screen controls
@@ -78,24 +84,30 @@ CtrlDown = document.querySelector("#ctrl-down");
 CtrlLeft = document.querySelector("#ctrl-left");
 CtrlRight = document.querySelector("#ctrl-right");
 
-CtrlArea.addEventListener("click", (e) => {
+CtrlArea.addEventListener("touchstart", handleMobile);
+CtrlArea.addEventListener("click", (e) => e.preventDefault());
+
+function handleMobile(e) {
+	if (inputLocked) return;
+
 	let btn = e.target.closest("button");
 	if (!btn) return;
-	if (dir.x) {
+	if (dir.x !== 0) {
 		if (btn === CtrlDown && dir.y !== 1) {
 			dir = { y: 1, x: 0 };
 		} else if (btn === CtrlUp && dir.y !== -1) {
 			dir = { y: -1, x: 0 };
 		}
-	} else {
+	} else if (dir.y !== 0) {
 		if (btn === CtrlRight && dir.x !== -1) {
 			dir = { y: 0, x: 1 };
 		} else if (btn === CtrlLeft && dir.x !== 1) {
 			dir = { y: 0, x: -1 };
 		}
 	}
-	console.log(e);
-});
+
+	inputLocked = true;
+}
 
 if (!foodSpot) newFood();
 
@@ -145,6 +157,7 @@ if (!gameOver) {
 // Game logic
 
 function gameLoop() {
+	inputLocked = true;
 	gameBox.innerHTML = "";
 	moveHead();
 	let head = snake[0];
@@ -162,6 +175,8 @@ function gameLoop() {
 
 	moveTail();
 	render();
+
+	inputLocked = false;
 }
 
 // Movement Functions
