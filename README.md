@@ -1,4 +1,4 @@
-﻿# 🐍 Snake Game – HTML, CSS & JavaScript
+# 🐍 Snake Game – HTML, CSS & JavaScript
 
 A fully functional Snake Game built completely from scratch using **HTML**, **Tailwind CSS**, and **vanilla JavaScript**.
 
@@ -125,4 +125,3 @@ No additional setup needed.
 - Settings menu
 
 ---
-

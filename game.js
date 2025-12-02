@@ -4,8 +4,8 @@ if (nav.type === "reload") {
 	window.location.href = "index.html";
 }
 
-let lastGame = localStorage.getItem("game")
-	? JSON.parse(localStorage.getItem("game"))
+let lastGame = localStorage.getItem("snake-game")
+	? JSON.parse(localStorage.getItem("snake-game"))
 	: {};
 let highScore = localStorage.getItem("snake-high-score")
 	? localStorage.getItem("snake-high-score")
@@ -174,7 +174,7 @@ let startOverBtn = document.querySelector("#restart-btn");
 startOverBtn.addEventListener("click", () => {
 	document.querySelector("#modal").classList.add("hidden");
 
-	localStorage.removeItem("game");
+	localStorage.removeItem("snake-game");
 	dir = { x: 1, y: 0 };
 	snake = [
 		{ x: 9, y: 10, dir: { x: 1, y: 0 } },
@@ -201,7 +201,6 @@ startOverBtn.addEventListener("click", () => {
 	gameOver = false;
 	control = setInterval(gameLoop, 200);
 });
-boss y namaste 
 // Save in case of clos ying tab
 
 window.addEventListener("beforeunload", () => {
@@ -212,6 +211,6 @@ window.addEventListener("beforeunload", () => {
 		gameOver,
 		score,
 	};
-	localStorage.setItem("game", JSON.stringify(game));
+	localStorage.setItem("snake-game", JSON.stringify(game));
 	localStorage.setItem("snake-high-score", highScore);
 });
