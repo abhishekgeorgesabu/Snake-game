@@ -1,127 +1,138 @@
-# 🐍 Snake Game – HTML, CSS & JavaScript
+# 🐍 Snake Game (HTML + CSS + JavaScript)
 
-A fully functional Snake Game built completely from scratch using **HTML**, **Tailwind CSS**, and **vanilla JavaScript**.
+A clean, fast, and modern Snake Game built using **vanilla JavaScript**, featuring:
 
-The game supports **state saving**, **continue after reload**, **keyboard controls**, **grid-based rendering**, and a clean **two-page flow** (Intro page + Game page).
-
----
-
-## 📸 Screenshots
-
-### **Intro Page**
-
-![Intro Page](./Images/intro%20page.png)
-
-### **Gameplay**
-
-![Gameplay](./Images/game%20page.png)
-
-### **Game Over Modal**
-
-![Game Over](./Images/game%20over.png)
+- Smooth keyboard controls
+- Full **mobile touch controls**
+- Auto-save using **localStorage**
+- Persistent **high score tracking**
+- Game state restore on reload
+- Seamless wrap-around movement
+- Responsive UI
 
 ---
 
-## 🚀 Features
+## 🚀 Live Demo
 
-### 🎮 Classic Gameplay
+👉 **Play Here:**  
+https://abhishekgeorgesabu.github.io/Snake-game/
 
-- Smooth snake movement
-- Arrow keys + W/A/S/D support
-- Snake grows after eating food
-- Wrap-around board edges
-- Self-collision detection
-- Game Over modal with restart option
+---
 
-### 💾 Auto-Save & Continue
+## 📝 Features
 
-The game saves automatically on tab close or reload:
+- **Real-time Movement** – Snake moves smoothly on a timed loop
+- **Input Locking** – Prevents instant reverse-direction kills
+- **Mobile Controls** – Touch-friendly arrow buttons
+- **Auto Save & Resume** – Saves direction, snake body, score, and food
+- **Border Wrap** – Moving outside one edge enters from opposite
+- **Game Over Modal** – Restart anytime
+- **High Score Persistence** – Stored permanently in localStorage
+
+---
+
+## 📱 Mobile Controls
+
+The game includes on-screen arrow buttons:
+
+- ⬆️ Up
+- ⬇️ Down
+- ⬅️ Left
+- ➡️ Right
+
+Supports **touchstart** for fast and responsive controls.
+
+---
+
+## 💾 Auto-Save System
+
+The game stores:
 
 - Snake body
-- Direction
-- Food position
+- Current direction
 - Score
-- Game status
+- Food position
+- Game-over state
 
-The **Continue Game** button restores everything exactly as it was.
+Saved under:
 
-### 🖥️ Clean UI
+- `snake-game`
+- `snake-high-score`
 
-- Intro menu with _New Game_ / _Continue Game_
-- Score & High Score display
-- Responsive 20×20 grid
-- Tailwind CSS styling
+On **beforeunload**, the state is updated so you can continue where you left off.
+
+---
+
+## 🕹 Gameplay
+
+- Use **W / A / S / D** or **Arrow Keys**
+- Touch controls supported
+- Eat food → Grow → Gain score
+- Wraps around the grid edges
+- Game ends on self-collision
+
+---
+
+## 🧩 Tech Stack
+
+- **HTML5**
+- **CSS3 (Tailwind)**
+- **Vanilla JavaScript**
+
+No frameworks. No canvas. Pure DOM grid rendering.
+
+---
+
+## 🖼 Screenshots
+
+Add your screenshots in a `/screenshots` folder and link them like this:
+
+![Gameplay](screenshots/gameplay.png)
+![Game Over](screenshots/gameover.png)
 
 ---
 
 ## 📂 Project Structure
 
-- index.html # Intro page (New / Continue)
-- intro.js # Intro page logic (load / new game)
-- game.html # Main game interface
-- game.js # Full snake game engine
-- README.md # Documentation
+/Snake-game
+├── index.html
+├── game.html
+├── style.css
+├── script.js
+├── README.md
 
 ---
 
-## 🕹️ Controls
+## 🔧 Run Locally
 
-| Key             | Action     |
-| --------------- | ---------- |
-| Arrow Up / W    | Move Up    |
-| Arrow Down / S  | Move Down  |
-| Arrow Left / A  | Move Left  |
-| Arrow Right / D | Move Right |
-
-Reverse turns are blocked to prevent instant self-collision.
-
----
-
-## 💡 Saving Logic
-
-The game stores a snapshot inside `localStorage`:
-
-```json
-{
-  "snake": [{ "x": 9, "y": 10 }, ...],
-  "dir": { "x": 1, "y": 0 },
-  "food": { "x": 5, "y": 9 },
-  "score": 4,
-  "gameOver": false
-}
-
+```bash
+git clone https://github.com/abhishekgeorgesabu/Snake-game.git
+cd Snake-game
+open index.html   # or double-click it
 ```
 
-This ensures seamless reload → play.
+---
 
-High score is also saved permanently.
+## 🧠 Reload Protection
+
+If the user reloads `game.html`, it redirects to `index.html`:
+
+```js
+const nav = performance.getEntriesByType("navigation")[0];
+if (nav.type === "reload") {
+	window.location.href = "index.html";
+}
+```
+
+This prevents broken game state and accidental deaths caused by a reload.
 
 ---
 
-## 🛠️ How to Run Locally
+## ⭐ Future Improvements
 
-1.Clone or download the repository:
-
-git clone <repository-url>
-
-2.Open index.html in any browser.
-
-No additional setup needed.
-
----
-
-## 🔮 Future Improvements
-
-- Add mobile touch controls
-
-- Difficulty levels / increasing speed
-
-- Sound effects & animations
-
-- Improved visual themes
-
-- Pause button
-
-- Settings menu
+- Difficulty levels (speed increase)
+- Sound effects
+- Themes (classic, neon, dark)
+- Better animations
 
 ---
