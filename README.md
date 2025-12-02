@@ -85,10 +85,9 @@ No frameworks. No canvas. Pure DOM grid rendering.
 
 ## 🖼 Screenshots
 
-Add your screenshots in a `/screenshots` folder and link them like this:
-
-![Gameplay](screenshots/gameplay.png)
-![Game Over](screenshots/gameover.png)
+![Intro Page](./Images/intro%20page.png)
+![Gameplay](./Images/game%20page.png)
+![Game Over](./Images/game%20over.png)
 
 ---
 
