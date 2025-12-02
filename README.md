@@ -91,17 +91,6 @@ No frameworks. No canvas. Pure DOM grid rendering.
 
 ---
 
-## 📂 Project Structure
-
-/Snake-game
-├── index.html
-├── game.html
-├── style.css
-├── script.js
-├── README.md
-
----
-
 ## 🔧 Run Locally
 
 ```bash
