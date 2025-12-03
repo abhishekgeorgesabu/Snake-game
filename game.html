@@ -10,6 +10,13 @@
 		<main
 			class="relative w-full min-h-screen flex justify-center items-center flex-col"
 		>
+			<button
+				id="pause-btn"
+				class="h-10 w-10 rounded-full fixed top-[30vmin] md:top-[100%] md:bottom-[10vmin] border border-yellow-400 p-2 z-100"
+			>
+				<img src="./Images/pause.svg" alt="Pause" />
+			</button>
+
 			<!-- Score Bar -->
 
 			<div
@@ -20,6 +27,7 @@
 				>
 					Score: <span id="score" class="text-xl sm:text-3xl"></span>
 				</div>
+
 				<div
 					class="text-xl sm:text-3xl min-w-[10rem] bg-red-500 p-2 rounded-md text-white"
 				>
@@ -37,6 +45,9 @@
 					grid-template-rows: repeat(20, 1fr);
 				"
 			></div>
+
+			<!-- Game Over -->
+
 			<div
 				id="modal"
 				class="hidden size-full bg-black/10 flex flex-col justify-center items-center gap-4"

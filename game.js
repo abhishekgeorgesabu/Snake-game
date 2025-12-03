@@ -77,14 +77,32 @@ document.addEventListener("keydown", (e) => {
 	}
 });
 
+// Pause Button
+
+let pauseBtn = document.querySelector("#pause-btn");
+
+pauseBtn.addEventListener("click", () => {
+	let game = {
+		dir,
+		snake,
+		food: foodSpot,
+		gameOver,
+		score,
+	};
+	localStorage.setItem("snake-game", JSON.stringify(game));
+	localStorage.setItem("snake-high-score", highScore);
+	window.location.href = "index.html";
+	console.log("t");
+});
+
 // On-screen controls
 
-CtrlArea = document.querySelector("#mob-ctrls");
+let CtrlArea = document.querySelector("#mob-ctrls");
 
-CtrlUp = document.querySelector("#ctrl-up");
-CtrlDown = document.querySelector("#ctrl-down");
-CtrlLeft = document.querySelector("#ctrl-left");
-CtrlRight = document.querySelector("#ctrl-right");
+let CtrlUp = document.querySelector("#ctrl-up");
+let CtrlDown = document.querySelector("#ctrl-down");
+let CtrlLeft = document.querySelector("#ctrl-left");
+let CtrlRight = document.querySelector("#ctrl-right");
 
 CtrlArea.addEventListener("touchstart", handleMobile);
 CtrlArea.addEventListener("click", (e) => e.preventDefault());
