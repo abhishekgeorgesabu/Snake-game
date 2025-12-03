@@ -1,7 +1,5 @@
-// Redirect to index page if the page is reloaded
-
+// Detect reload (allowed)
 const nav = performance.getEntriesByType("navigation")[0];
-
 if (nav.type === "reload") {
 	window.location.href = "index.html";
 }
@@ -92,7 +90,6 @@ pauseBtn.addEventListener("click", () => {
 	localStorage.setItem("snake-game", JSON.stringify(game));
 	localStorage.setItem("snake-high-score", highScore);
 	window.location.href = "index.html";
-	console.log("t");
 });
 
 // On-screen controls
