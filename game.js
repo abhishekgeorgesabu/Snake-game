@@ -4,6 +4,8 @@ if (nav.type === "reload") {
 	window.location.href = "index.html";
 }
 
+// Load Data
+
 let lastGame = localStorage.getItem("snake-game")
 	? JSON.parse(localStorage.getItem("snake-game"))
 	: {};
@@ -35,7 +37,6 @@ let length = snake.length;
 let control = null;
 
 let gameBox = document.querySelector("#game-box");
-let modal = document.querySelector("#modal");
 
 // Score box
 
@@ -73,23 +74,6 @@ document.addEventListener("keydown", (e) => {
 			dir = { y: 0, x: -1 };
 		}
 	}
-});
-
-// Pause Button
-
-let pauseBtn = document.querySelector("#pause-btn");
-
-pauseBtn.addEventListener("click", () => {
-	let game = {
-		dir,
-		snake,
-		food: foodSpot,
-		gameOver,
-		score,
-	};
-	localStorage.setItem("snake-game", JSON.stringify(game));
-	localStorage.setItem("snake-high-score", highScore);
-	window.location.href = "index.html";
 });
 
 // On-screen controls
@@ -219,6 +203,8 @@ function moveTail() {
 
 // Game Over
 
+let modal = document.querySelector("#modal");
+
 function endGame() {
 	gameOver = true;
 	clearInterval(control);
@@ -227,38 +213,67 @@ function endGame() {
 	localStorage.setItem("snake-high-score", highScore);
 }
 
+// Pause Button
+
+let pauseBtn = document.querySelector("#pause-btn");
+let pauseModal = document.querySelector("#pause-modal");
+let continueBtn = document.querySelector("#continue-btn");
+
+pauseBtn.addEventListener("click", () => {
+	let game = {
+		dir,
+		snake,
+		food: foodSpot,
+		gameOver,
+		score,
+	};
+	localStorage.setItem("snake-game", JSON.stringify(game));
+	localStorage.setItem("snake-high-score", highScore);
+	clearInterval(control);
+	pauseModal.classList.remove("hidden");
+	pauseModal.classList.add("fixed");
+});
+
+continueBtn.addEventListener("click", () => {
+	pauseModal.classList.add("hidden");
+	control = setInterval(gameLoop, 200);
+});
+
 // Restart Game
 
-let startOverBtn = document.querySelector("#restart-btn");
-startOverBtn.addEventListener("click", () => {
-	document.querySelector("#modal").classList.add("hidden");
+let startOverBtn = document.querySelectorAll(".restart-btn");
+startOverBtn.forEach((btn) => {
+	btn.addEventListener("click", () => {
+		modal.classList.add("hidden");
 
-	localStorage.removeItem("snake-game");
-	dir = { x: 1, y: 0 };
-	snake = [
-		{ x: 9, y: 10, dir: { x: 1, y: 0 } },
-		{ x: 8, y: 10, dir: { x: 1, y: 0 } },
-	];
-	foodGrids = [];
-	for (let i = 1; i <= 20; i++) {
-		for (let j = 1; j <= 20; j++) {
-			if (!snake.some((grid) => grid.x === i && grid.y === j)) {
-				let obj = { x: i, y: j };
-				foodGrids.push(obj);
+		pauseModal.classList.add("hidden");
+		if (localStorage.getItem("snake-game"))
+			localStorage.removeItem("snake-game");
+		dir = { x: 1, y: 0 };
+		snake = [
+			{ x: 9, y: 10, dir: { x: 1, y: 0 } },
+			{ x: 8, y: 10, dir: { x: 1, y: 0 } },
+		];
+		foodGrids = [];
+		for (let i = 1; i <= 20; i++) {
+			for (let j = 1; j <= 20; j++) {
+				if (!snake.some((grid) => grid.x === i && grid.y === j)) {
+					let obj = { x: i, y: j };
+					foodGrids.push(obj);
+				}
 			}
 		}
-	}
+		length = snake.length;
+		score = 0;
+		scoreBox.textContent = score;
 
-	length = snake.length;
-	score = 0;
-	scoreBox.textContent = score;
+		gameBox.innerHTML = "";
+		newFood();
+		render();
 
-	gameBox.innerHTML = "";
-	newFood();
-	render();
-
-	gameOver = false;
-	control = setInterval(gameLoop, 200);
+		gameOver = false;
+		control = setInterval(gameLoop, 200);
+	});
 });
 // Save in case of clos ying tab
 

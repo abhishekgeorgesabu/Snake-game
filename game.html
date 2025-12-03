@@ -45,6 +45,25 @@
 				"
 			></div>
 
+			<!-- Game Paused -->
+
+			<div
+				id="pause-modal"
+				class="hidden size-full bg-black/10 flex flex-col justify-center items-center gap-4"
+			>
+				<button
+					id="continue-btn"
+					class="p-3 text-xl rounded-md border border-black bg-white"
+				>
+					Continue
+				</button>
+				<button
+					class="restart-btn p-3 text-xl rounded-md border border-black bg-white"
+				>
+					Start Over
+				</button>
+			</div>
+
 			<!-- Game Over -->
 
 			<div
@@ -53,8 +72,7 @@
 			>
 				<div class="text-3xl">GAME OVER</div>
 				<button
-					id="restart-btn"
-					class="p-3 text-xl rounded-md bg-red-500 text-white"
+					class="restart-btn p-3 text-xl rounded-md bg-red-500 text-white"
 				>
 					Start over
 				</button>
