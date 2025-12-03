@@ -1,3 +1,5 @@
+// Redirect to index page if the page is reloaded
+
 const nav = performance.getEntriesByType("navigation")[0];
 
 if (nav.type === "reload") {
@@ -52,6 +54,8 @@ let inputLocked = true;
 document.addEventListener("keydown", (e) => {
 	if (inputLocked) return;
 
+	inputLocked = true;
+
 	if (dir.x !== 0) {
 		if ((e.key == "ArrowDown" || e.key.toLowerCase() == "s") && dir.y !== 1) {
 			dir = { y: 1, x: 0 };
@@ -71,8 +75,6 @@ document.addEventListener("keydown", (e) => {
 			dir = { y: 0, x: -1 };
 		}
 	}
-
-	inputLocked = true;
 });
 
 // On-screen controls
@@ -157,7 +159,6 @@ if (!gameOver) {
 // Game logic
 
 function gameLoop() {
-	inputLocked = true;
 	gameBox.innerHTML = "";
 	moveHead();
 	let head = snake[0];
